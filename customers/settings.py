@@ -60,8 +60,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # You can also specify specific origins
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000/api/customers/",
-    "http://127.0.0.1:8000/",
+    "http://localhost:3000",
+    
 ]
 
 # Additional CORS settings
