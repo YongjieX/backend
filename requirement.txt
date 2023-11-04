@@ -27,6 +27,7 @@ defusedxml==0.7.1
 descartes==1.1.0
 detectron2 @ git+https://github.com/facebookresearch/detectron2.git@5aeb252b194b93dc2879b4ac34bc51a31b5aee13
 Django==4.2.6
+django-cors-headers==4.3.0
 django-rest-framework==0.1.0
 djangorestframework==3.14.0
 entrypoints==0.4

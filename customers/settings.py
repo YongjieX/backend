@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
+    'corsheaders',
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,6 +55,20 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "customers.urls"
+# Allow requests from all origins (not recommended for production)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# You can also specify specific origins
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000/api/customers/",
+    "http://127.0.0.1:8000/",
+]
+
+# Additional CORS settings
+# ...
+
+# To allow credentials (e.g., cookies) to be sent with the request:
+CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
     {
