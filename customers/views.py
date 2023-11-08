@@ -1,14 +1,15 @@
 
 from django.http import JsonResponse, Http404
 from .serializer import CustomerSerializer
-from rest_framework.decorators import api_view  # which method is allowed
+from rest_framework.decorators import api_view,permission_classes  # which method is allowed
 from rest_framework.response import Response
 # json/ 404/ html response
 from rest_framework import status  # give us a bunch of options of status codes
 from .models import Customer  # Assuming your models are in the same app
-
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def customers(request):
     if request.method == 'GET':
 
@@ -24,8 +25,8 @@ def customers(request):
             return Response({'customer': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def customer(request, id):
     try:
         data = Customer.objects.get(pk=id)
