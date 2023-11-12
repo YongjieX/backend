@@ -1,6 +1,6 @@
 
 from django.http import JsonResponse, Http404
-from .serializer import CustomerSerializer
+from .serializer import CustomerSerializer,UserSerializer
 # which method is allowed
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -14,10 +14,8 @@ from rest_framework.permissions import IsAuthenticated
 @permission_classes([IsAuthenticated])
 def customers(request):
     if request.method == 'GET':
-
         data = Customer.objects.all()
         serializer = CustomerSerializer(data, many=True)
-
         # Return the serialized data as JSON response
         return Response({'customers': serializer.data})
     elif request.method == 'POST':
@@ -51,3 +49,12 @@ def customer(request, id):
             return Response({'customer': serializer.data})
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @permission_classes([IsAuthenticated])
+@api_view(['POST'])
+def register(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=status.HTTP_201_CREATED)
