@@ -54,17 +54,18 @@ INSTALLED_APPS = [
     "customers",
     "rest_framework",
     'rest_framework_simplejwt',
+    "django.contrib.staticfiles",
+    "graphene_django",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
 ]
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-     "ROTATE_REFRESH_TOKENS": True
+    "ROTATE_REFRESH_TOKENS": True
 }
 
 MIDDLEWARE = [
@@ -174,3 +175,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+GRAPHENE = {
+    "SCHEMA": "customers.schema.schema"
+}

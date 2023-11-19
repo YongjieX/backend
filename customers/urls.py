@@ -19,7 +19,9 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import path
+from graphene_django.views import GraphQLView
 from django.contrib import admin
 from django.urls import path
 from customers import views
@@ -30,7 +32,8 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/customers/', views.customers, name='customers'),
     path('api/customers/<int:id>', views.customer, name='customer'),
-    path('api/register/', views.register, name='register')
+    path('api/register/', views.register, name='register'),
+    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True)))
 ]
 # Function views
 #     1. Add an import:  from my_app import views
