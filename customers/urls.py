@@ -31,9 +31,10 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/customers/', views.customers, name='customers'),
-    path('api/customers/<int:id>', views.customer, name='customer'),
+    path('api/customers/<int:id>/', views.customer, name='customer'),
     path('api/register/', views.register, name='register'),
-    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True)))
+    # path("graphql", GraphQLView.as_view(graphiql=True))
+    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True)))
 ]
 # Function views
 #     1. Add an import:  from my_app import views
