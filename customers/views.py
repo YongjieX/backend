@@ -1,6 +1,6 @@
 
 from django.http import JsonResponse, Http404
-from .serializer import CustomerSerializer,UserSerializer
+from .serializer import CustomerSerializer, UserSerializer
 # which method is allowed
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -9,6 +9,7 @@ from rest_framework import status  # give us a bunch of options of status codes
 from .models import Customer  # Assuming your models are in the same app
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -58,12 +59,13 @@ def register(request):
     if serializer.is_valid():
         user = serializer.save()
         refresh = RefreshToken.for_user(user)
-        tokens={
-            'refresh' : str(refresh),
-            'access' : str(refresh.access_token)
+        tokens = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
         }
-        return Response(tokens,status=status.HTTP_201_CREATED)
+        return Response(tokens, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 """
 {
