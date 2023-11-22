@@ -49,10 +49,51 @@ class CreateCustomer(graphene.Mutation):
         return CreateCustomer(customer=customer)
 
 
+class CreateOrder(graphene.Mutation):
+    class Arguments:
+        description = graphene.String()
+        total_in_cents = graphene.String()
+        customer = graphene.ID()
+
+    order = graphene.Field(OrderType)
+
+    def mutate(root, info, description, total_in_cents, customer):
+        try:
+            # Retrieve the customer instance
+            customer_instance = Customer.objects.get(pk=customer)
+        except Customer.DoesNotExist:
+            # Handle the case where the customer doesn't exist
+            raise Exception("Customer with the given ID does not exist.")
+        order = Order(description=description,
+                      total_in_cents=total_in_cents, customer=customer_instance)
+        # customer = Customer(name=name, industry=industry)
+        order.save()
+        return CreateOrder(order=order)
+
+
+class DeleteOrder(graphene.Mutation):
+    class Arguments:
+        order_id = graphene.ID(required=True)
+
+    success = graphene.Boolean()
+    message = graphene.String()
+    order = graphene.Field(OrderType)
+
+    def mutate(root, info, order_id):
+        try:
+            order = Order.objects.get(pk=order_id)
+            order.delete()
+            return DeleteOrder(success=True, message="Order deleted successfully.")
+        except Order.DoesNotExist:
+            return DeleteOrder(success=False, message="Order not found.")
+
+
 class Mutations(graphene.ObjectType):
-    # pass
     time.sleep(1)
-    createCustomer = CreateCustomer.Field()
+    create_customer = CreateCustomer.Field()
+    create_order = CreateOrder.Field()
+    delete_order = DeleteOrder.Field()
+    # Other mutations as necessary
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
