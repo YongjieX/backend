@@ -52,8 +52,8 @@ class CreateCustomer(graphene.Mutation):
 class CreateOrder(graphene.Mutation):
     class Arguments:
         description = graphene.String()
-        total_in_cents = graphene.String()
-        customer = graphene.ID()
+        total_in_cents = graphene.Float()
+        customer = graphene.ID(required=True)
 
     order = graphene.Field(OrderType)
 
